@@ -1,30 +1,28 @@
 #!/usr/bin/env bash
 
-sed -i 's/getty/getty -a vagrant/' /etc/init/tty1.conf
-initctl stop tty1
-initctl start tty1
-
 apt-get update
-apt-get install -y virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11 unity-greeter alsa alsa-tools chromium-browser browser-plugin-lightspark
+apt-get install -y alsa alsa-tools cclive mplayer2
 
+
+adduser vagrant video
 adduser vagrant audio
 amixer sset Master 0dB unmute
 amixer sset "Master Mono" 0dB unmute
 amixer sset PCM 0dB unmute
 
-cat > /etc/lightdm/lightdm.conf <<EOF
-[SeatDefaults]
-greeter-session=unity-greeter
-allow-guest=false
-autologin-user=vagrant
-EOF
+# Autologin to console
+sed -i 's/getty/getty -a vagrant/' /etc/init/tty1.conf
+initctl stop tty1
+initctl start tty1
 
-cat > /usr/share/xsessions/safety.desktop <<EOF
-[Desktop Entry]
-Encoding=UTF-8
-Name=safety
-Comment=Safety
-Exec=chromium-browser https://www.youtube.com/watch?v=IacSW-rmxsc
+cat > /home/vagrant/.bash_profile <<EOF
+# Created by bootstrap.sh
+if [ ! -e /vagrant/safety.3gpp ]; then
+  cclive -O /vagrant/safety.3gpp https://www.youtube.com/watch?v=IacSW-rmxsc
+fi
+if [ "\`tty\`" == "/dev/tty1" ] && [ ! -f /dev/shm/.noreplay ]; then
+  touch /dev/shm/.noreply
+  mplayer -fs -vo fbdev /vagrant/safety.3gpp
+fi;
 EOF
-
-service lightdm restart
+chown vagrant /home/vagrant/.bash_profile
