@@ -1,3 +1,5 @@
 *~
 .vagrant/
 safety.3gpp
+.noreplay
+login.3gpp
