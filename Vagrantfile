@@ -16,6 +16,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.name = "box"
     v.customize ["modifyvm", :id, "--audio", "coreaudio"]
     #v.customize ["modifyvm", :id, "--accelerate3d", "on"]
-    v.customize ["modifyvm", :id, "--vram", "12"]
+    v.customize ["modifyvm", :id, "--vram", "64"]
   end
 end

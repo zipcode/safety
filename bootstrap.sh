@@ -12,17 +12,17 @@ amixer sset PCM 0dB unmute
 
 cat > /home/vagrant/.bash_profile <<EOF
 # Created by bootstrap.sh
-if [ ! -e /vagrant/safety.3gpp ]; then
-  cclive -O /vagrant/safety.3gpp https://www.youtube.com/watch?v=IacSW-rmxsc
+if [ ! -e safety.3gpp ]; then
+  cclive -O safety.3gpp https://www.youtube.com/watch?v=IacSW-rmxsc
 fi
-if [ ! -e /vagrant/login.3gpp ]; then
-  cclive -O /vagrant/login.3gpp https://www.youtube.com/watch?v=7nQ2oiVqKHw
+if [ ! -e login.3gpp ]; then
+  cclive -O login.3gpp https://www.youtube.com/watch?v=7nQ2oiVqKHw
 fi
-if [ "\`tty\`" == "/dev/tty1" ] && [ ! -f /vagrant/.noreplay ]; then
-  touch /vagrant/.noreplay
-  mplayer -really-quiet -fs -vo fbdev /vagrant/safety.3gpp 2>/dev/null
+if [ "\`tty\`" == "/dev/tty1" ] && [ ! -f .noreplay ]; then
+  touch .noreplay
+  mplayer -really-quiet -fs -vo fbdev safety.3gpp 2>/dev/null
 else
-  mplayer -really-quiet -vo none /vagrant/login.3gpp 2>/dev/null
+  mplayer -really-quiet -vo none login.3gpp 2>/dev/null
 fi
 EOF
 chown vagrant /home/vagrant/.bash_profile
